@@ -1,0 +1,36 @@
+### Todos los productos
+GET http://localhost:8080/products/
+
+### Producto por ID
+GET http://localhost:8080/products/33
+
+### Productos por categoria
+GET http://localhost:8080/products?category=Desktop
+
+### Productos por nombre (Completo o parcial)
+GET http://localhost:8080/products?name=Mouse
+
+### Agregando nuevo producto
+POST http://localhost:8080/products
+Content-Type: application/json
+
+{
+    "codigo": 34,
+    "nombre": "Mouse M170 Wireless Mouse",
+    "precio": 500,
+    "categoria": "Accesorios"
+}
+
+### Actualizar parcialmente
+PATCH http://localhost:8080/products/edit/32
+Content-Type: application/json
+{
+    "codigo": 34,
+    "nombre": "Mouse M170 Wireless Mouse",
+    "precio": 500,
+    "categoria": "Accesorios"
+}
+
+### Eliminar un producto
+DELETE http://localhost:8080/products/delete/33
+Content-Type: application/json
