@@ -1,0 +1,3 @@
+PORT = 8080
+URI = mongodb+srv://enzofigliolip:zJuolpgq7LpZSkjN@un3f.2esxi8e.mongodb.net/
+DB = CRUD-TP

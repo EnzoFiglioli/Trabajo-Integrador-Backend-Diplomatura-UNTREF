@@ -44,7 +44,7 @@ app.get("/products",async(req,res)=>{
 app.get("/products/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const product = await Product.findOne({ codigo: id });
+        const product = await Product.findOne({ _id: id });
         if (!product) {
             return res.status(404).json({ message: "No se encontró ningun producto con el id: " + id });
         }
@@ -57,6 +57,7 @@ app.get("/products/:id", async (req, res) => {
 
 // Añadiendo productos
 app.post("/products",async(req,res)=>{
+    
     try{
         const newProduct = new Product(req.body);
         if(!newProduct)return res.status(401).json({error:"Es necesario añadir un nuevo producto"});
@@ -69,38 +70,41 @@ app.post("/products",async(req,res)=>{
 
 // Modificar un producto
 app.patch("/products/edit/:id", async (req, res) => {
-    const { codigo, price, nombre, categoria } = req.body;
+    const { price } = req.body;
     const id  = req.params.id;
     
     try {
-        const editProduct = await Product.findOneAndUpdate(
-            {codigo:id},
-            {
-                codigo,
-                nombre,
-                precio:price,
-                categoria
-            },
-            {new:true}
+        const editProduct = await Product.findByIdAndUpdate(
+            id,
+            { precio: price },
+            { new: true }
         );
-        
-        if (!editProduct) return res.json({ message: "El precio no se pudo actualizar" });
-        return res.json({ message: "Producto actualizado", price });
+
+        if (!editProduct) {
+            return res.status(404).json({ message: "Producto no encontrado" });
+        }
+
+        return res.json({ message: "Producto actualizado", product: editProduct });
     } catch (error) {
-        res.status(500).json({ error: "No se encontro producto" });
+        console.error(error);
+        res.status(500).json({ error: "Ocurrió un error al actualizar el producto" });
     }
 });
 
 app.delete("/products/delete/:id",async(req,res)=>{
     const {id} = req.params;
     try{
-        const deleteProduct = await Product.findOneAndDelete({codigo:id});
+        const deleteProduct = await Product.findOneAndDelete({_id:id});
         if(!deleteProduct) return res.status(404).json({message:"Producto no encontrado"});
         res.json({message:"Producto eliminado exitosamente"});
     }catch(error){
         res.status(500).json({error:"Error en el servidor al intentar borrar el producto"});
     }
 });
+
+app.use("*",(req,res)=>{
+    res.status(404).json({message:"Ruta no encontrada"});
+})
 
 app.listen(port,()=>{
     console.log(`Aplicacion inicada en el puerto ${port}`);

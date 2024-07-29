@@ -2,7 +2,7 @@
 GET http://localhost:8080/products/
 
 ### Producto por ID
-GET http://localhost:8080/products/33
+GET http://localhost:8080/products/668e75d297c8ec166247046b
 
 ### Productos por categoria
 GET http://localhost:8080/products?category=Desktop
@@ -15,22 +15,22 @@ POST http://localhost:8080/products
 Content-Type: application/json
 
 {
-    "codigo": 34,
+    "codigo": 35,
     "nombre": "Mouse M170 Wireless Mouse",
     "precio": 500,
     "categoria": "Accesorios"
 }
 
 ### Actualizar parcialmente
-PATCH http://localhost:8080/products/edit/32
+PATCH http://localhost:8080/products/edit/668e75d297c8ec166247046b
 Content-Type: application/json
 {
-    "codigo": 34,
-    "nombre": "Mouse M170 Wireless Mouse",
-    "precio": 500,
-    "categoria": "Accesorios"
+  "price":100
 }
 
 ### Eliminar un producto
-DELETE http://localhost:8080/products/delete/33
+DELETE http://localhost:8080/products/delete/66a79493d65e51c6696833c4
 Content-Type: application/json
+
+### Ruta desconocida (Error 404)
+GET  http://localhost:8080/usuarios
